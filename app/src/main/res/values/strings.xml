@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Battery Tester</string>
+    <string name="action_about">O programie</string>
+
+    <string name="time_view">CZAS</string>
+    <string name="temp_view">TEMPERATURA</string>
+    <string name="voltage_view">NAPIĘCIE</string>
+    <string name="current_view">PRĄD</string>
+    <string name="capacity_view">POJEMNOŚĆ</string>
+    <string name="rating_view">OCENA OGNIWA</string>
+    
+    <string name="start_button">START</string>
+    <string name="stop_button">STOP</string>
+
+
+</resources>
