@@ -30,6 +30,21 @@ import java.util.TimerTask;
 
 public class TesterActivity extends AppCompatActivity {
 
+    /*
+    * R1 IF Price = Cheap AND Time = VeryBad THEN Rating = 2
+    * R2 IF Price = Cheap AND Time = Bad THEN Rating = 3
+    * R3 IF Price = Cheap AND Time = Good THEN Rating = 4
+    * R4 IF Price = Cheap AND Time = VeryGood THEN Rating = 5
+    * R5 IF Price = Average AND Time = VeryBad THEN Rating = 1
+    * R6 IF Price = Average AND Time = Bad THEN Rating = 2
+    * R7 IF Price = Average AND Time = Good THEN Rating = 4
+    * R8 IF Price = Average AND Time = VeryGood Rating = 5
+    * R9 IF Price = Expensive AND Time = VeryBad THEN Rating = 1
+    * R10 IF Price = Expensive AND Time = Bad THEN Rating = 2
+    * R11 IF Price = Expensive AND Time = Good THAN Rating = 3
+    * R12 IF Price = Expensive AND Time = VeryGood THAN Rating 4
+    */
+
     Timer timer;
     boolean receive = false;
     MyTimerTask myTimerTask;
