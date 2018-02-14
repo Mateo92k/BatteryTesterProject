@@ -31,10 +31,10 @@ public class Fuzzy {
                 conclusionSet.get_averageRatingValue() * conclusionSet.get_averageRatingSingletonValue() +
                 conclusionSet.get_goodRatingValue() * conclusionSet.get_goodRatingSingletonValue() +
                 conclusionSet.get_veryGoodRatingValue() * conclusionSet.get_veryGoodRatingSingletonValue()) /
-                (conclusionSet.get_veryBadRatingSingletonValue() +
-                        conclusionSet.get_badRatingSingletonValue() +
-                        conclusionSet.get_averageRatingSingletonValue() +
-                        conclusionSet.get_goodRatingSingletonValue() +
-                        conclusionSet.get_veryGoodRatingSingletonValue());
+                (conclusionSet.get_veryBadRatingValue() +
+                        conclusionSet.get_badRatingValue() +
+                        conclusionSet.get_averageRatingValue() +
+                        conclusionSet.get_goodRatingValue() +
+                        conclusionSet.get_veryGoodRatingValue());
     }
 }
