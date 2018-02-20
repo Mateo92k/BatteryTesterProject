@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.mateusz.batterytester.Model.Domain.Fuzzy;
+import com.example.mateusz.batterytester.Model.Service.RatingService;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -215,6 +217,8 @@ public class TesterActivity extends AppCompatActivity {
         //Method is called after taskexecution
         @Override
         protected void onPostExecute(Boolean result) {
+            Boolean haveToStop = false;
+            String part4 = "";
             if (result) {
                 Log.v("dd", "onPostExecute: Completed with an Error.");
             } else {
@@ -230,11 +234,19 @@ public class TesterActivity extends AppCompatActivity {
                     TextView current = (TextView) findViewById(R.id.textViewCurrentResult);
                     TextView capacity = (TextView) findViewById(R.id.textViewCapacityResult);
 
+
+
+                    if(odebrane.contains("STOP")){
+
+                         haveToStop = true;
+                    }
+                    
                     String[] parts_odebrane = odebrane.split("-");
+
                     String part1 = parts_odebrane[0];
                     String part2 = parts_odebrane[1];
                     String part3 = parts_odebrane[2];
-                    String part4 = parts_odebrane[3];
+                    part4 = parts_odebrane[3];
                     String part5 = parts_odebrane[4];
 
                     temperature.setText(part1);
@@ -244,9 +256,16 @@ public class TesterActivity extends AppCompatActivity {
                     capacity.setText(part5);
 
 
+
+
                 }
 
 
+            }
+            if(haveToStop){
+                RatingService ratingService = new RatingService();
+                double rate = ratingService.RateBatery(1.2,Double.parseDouble(part4));
+                this.cancel(haveToStop);
             }
 
         }
