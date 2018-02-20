@@ -42,7 +42,7 @@ public class TesterActivity extends AppCompatActivity {
     * R9 IF Price = Expensive AND Time = VeryBad THEN Rating = 1
     * R10 IF Price = Expensive AND Time = Bad THEN Rating = 2
     * R11 IF Price = Expensive AND Time = Good THAN Rating = 3
-    * R12 IF Price = Expensive AND Time = VeryGood THAN Rating 4
+    * R12 IF Price = Expensive AND Time = VeryGood THAN Rating = 4
     */
 
     Timer timer;

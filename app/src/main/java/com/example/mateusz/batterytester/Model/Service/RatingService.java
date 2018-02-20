@@ -18,13 +18,10 @@ import com.example.mateusz.batterytester.Model.Interface.IRule;
 
 import java.util.ArrayList;
 
-/**
- * Created by Sebas on 13.02.2018.
- */
 
 public class RatingService {
 
-    public double RateBatery(double price, double time){
+    public double RateBattery(double price, double time){
 
         Fuzzy fuzzy = new Fuzzy();
         FuzzyConclusionSet conclusionSet = new FuzzyConclusionSet();

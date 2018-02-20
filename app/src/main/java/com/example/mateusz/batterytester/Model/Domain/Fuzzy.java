@@ -2,9 +2,6 @@ package com.example.mateusz.batterytester.Model.Domain;
 
 import com.example.mateusz.batterytester.Model.Domain.Objects.FuzzyConclusionSet;
 
-/**
- * Created by Sebas on 13.02.2018.
- */
 
 public class Fuzzy {
     public double CalculateValueByUseFullTrapeze(double leftSlopeStart, double leftSlopeEnd,double rightSlopeStart, double rightSlopeEnd, double value){

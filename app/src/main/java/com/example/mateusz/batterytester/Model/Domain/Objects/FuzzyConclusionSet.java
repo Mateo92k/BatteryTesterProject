@@ -1,8 +1,5 @@
 package com.example.mateusz.batterytester.Model.Domain.Objects;
 
-/**
- * Created by Sebas on 13.02.2018.
- */
 
 public class FuzzyConclusionSet {
 
@@ -11,7 +8,7 @@ public class FuzzyConclusionSet {
     public double PriceExpensive;
 
     public double TimeVeryBad;
-    public double TimeBad ;
+    public double TimeBad;
     public double TimeGood;
     public double TimeVeryGood;
 
@@ -41,6 +38,8 @@ public class FuzzyConclusionSet {
     public int get_veryGoodRatingSingletonValue(){
         return 5;
     }
+
+
 
     public double get_veryBadRatingValue() {
         return _veryBadRatingValue;
