@@ -17,7 +17,7 @@ public class ArduinoTranslationService {
             response.set_temperature(spitedResponse[0].trim());
             response.set_voltage(spitedResponse[1].trim());
             response.set_current(spitedResponse[2].trim());
-            response.set_time(Double.parseDouble(spitedResponse[3].trim()));
+            response.set_time(spitedResponse[3].trim());
             response.set_capacity(spitedResponse[4].trim());
             response.set_stop(Integer.parseInt(spitedResponse[5].trim()) == 1);
             return response;

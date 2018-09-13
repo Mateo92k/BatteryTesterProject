@@ -125,7 +125,7 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
                 temperature.setText(response.get_temperature());
                 voltage.setText(response.get_voltage());
                 current.setText(response.get_current());
-                time.setText(response.get_time().toString());
+                time.setText(response.get_time());
                 capacity.setText(response.get_capacity());
 
 
@@ -139,7 +139,7 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
 
         if(haveToStop){
             RatingService ratingService = new RatingService();
-            double rate = ratingService.RateBattery(1.2,response.get_time());
+            double rate = ratingService.RateBattery(1.2,20);
             // TODO Dodać cenę z jakiegoś wpisywaczka.
 
             RatingBar rBar = _activity.findViewById(R.id.ratingBar);
