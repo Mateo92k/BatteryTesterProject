@@ -50,7 +50,6 @@ public class TesterActivity extends AppCompatActivity {
     Timer timer;
     boolean receive = false;
     MyTimerTask myTimerTask;
-    private GoogleApiClient client;
 
 
     @Override
@@ -62,9 +61,6 @@ public class TesterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tester);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
     }
 
@@ -133,21 +129,11 @@ public class TesterActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
     }
 
     @Override
     public void onStop() {
         super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
     }
 
 
