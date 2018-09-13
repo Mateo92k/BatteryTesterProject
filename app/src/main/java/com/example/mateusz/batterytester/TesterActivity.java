@@ -14,6 +14,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 //import com.example.mateusz.app.Model.Domain.Objects.FuzzyConclusionSet;
+import com.example.mateusz.batterytester.Model.Domain.Objects.ArduinoResponse;
+import com.example.mateusz.batterytester.Model.Service.ArduinoTranslationService;
 import com.example.mateusz.batterytester.Model.Service.RatingService;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -145,7 +147,7 @@ public class TesterActivity extends AppCompatActivity {
        // int msg_length;
       //  byte[] message;
         DatagramPacket p;
-        String odebrane;
+        private String _rawResponse;
 
 
 
@@ -190,10 +192,9 @@ public class TesterActivity extends AppCompatActivity {
                 Log.v("dd", "try to receive");
                 try {
                     s.receive(p);
-                    byte[] test = p.getData();
-                    odebrane = new String(p.getData());
+                    _rawResponse = new String(p.getData());
 
-                    Log.v("dd", "S: Received: '" + odebrane + "'");
+                    Log.v("dd", "S: Received: '" + _rawResponse + "'");
 
                 } catch (IOException e) {
 
@@ -225,71 +226,50 @@ public class TesterActivity extends AppCompatActivity {
             } else {
                 Log.v("dd", "onPostExecute: Completed.");
 
-                // MainActivity.TempUpdate(odebrane);
+
                 if (receive == true) {
                     receive = false;
 
-                    TextView time = (TextView) findViewById(R.id.textViewTimeResult);
-                    TextView temperature = (TextView) findViewById(R.id.textViewTempResult);
-                    TextView voltage = (TextView) findViewById(R.id.textViewVoltageResult);
-                    TextView current = (TextView) findViewById(R.id.textViewCurrentResult);
-                    TextView capacity = (TextView) findViewById(R.id.textViewCapacityResult);
+                    TextView time = findViewById(R.id.textViewTimeResult);
+                    TextView temperature = findViewById(R.id.textViewTempResult);
+                    TextView voltage = findViewById(R.id.textViewVoltageResult);
+                    TextView current = findViewById(R.id.textViewCurrentResult);
+                    TextView capacity = findViewById(R.id.textViewCapacityResult);
 
-
-                    /*
-                    if(odebrane.contains("STOP")){
-
-                         haveToStop = true;
+                    ArduinoTranslationService translationService = new ArduinoTranslationService();
+                    translationService.set_rawResponse(_rawResponse);
+                    ArduinoResponse response = null;
+                    try {
+                        response = translationService.ProcessResponse();
+                    }catch (Exception e){
+                        Log.v("Translation Exception", "Some Exception occurred during translation " + e.getMessage());
                     }
-                    */
-                    String[] parts_odebrane = odebrane.split("-");
 
-                    String part1 = parts_odebrane[0];
-                    String part2 = parts_odebrane[1];
-                    String part3 = parts_odebrane[2];
-                    part4 = parts_odebrane[3];
-                    String part5 = parts_odebrane[4];
-                    stop = parts_odebrane[5];
+                    if(response == null){
+                        return;
+                    }
 
-                    temperature.setText(part1);
-                    voltage.setText(part2);
-                    current.setText(part3);
-                    time.setText(part4);
-                    capacity.setText(part5);
+
+                    temperature.setText(response.get_temperature());
+                    voltage.setText(response.get_voltage());
+                    current.setText(response.get_current());
+                    time.setText(response.get_time());
+                    capacity.setText(response.get_capacity());
 
                     Log.v("haveToStop", "Stop: " + stop);
 
-                    int end=0;
-                    try {
-
-                        //stop.replaceAll("[^\\d.]","").trim();
-                        end = Integer.parseInt(stop.trim());
-                        Log.v("haveToStop", "End " + end);
-                    }
-                    catch (NumberFormatException e){
-                        stop="";
-                    }
-                    if(end==1){
+                    if(response.get_stop()){
                         haveToStop=true;
-                        Log.v("haveToStop", "Wartość: " + end);
+                        Log.v("haveToStop", "Value: " + true);
                     }
-
-                    /*if(stop.equals("1")){
-                        haveToStop = true;
-
-
-                    }*/
-
                 }
-
-
             }
 
 
             if(haveToStop){
                 RatingService ratingService = new RatingService();
                 double rate = ratingService.RateBattery(1.2,20);
-                RatingBar rBar = (RatingBar) findViewById(R.id.ratingBar);
+                RatingBar rBar = findViewById(R.id.ratingBar);
                 rBar.setRating((float)rate);
 
                 this.cancel(haveToStop);
