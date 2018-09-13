@@ -1,4 +1,4 @@
-package com.example.mateusz.batterytester.Model.Domain;
+package com.example.mateusz.batterytester.Model.Domain.Rules;
 
 import com.example.mateusz.batterytester.Model.Domain.Objects.FuzzyConclusionSet;
 import com.example.mateusz.batterytester.Model.Interface.IRule;

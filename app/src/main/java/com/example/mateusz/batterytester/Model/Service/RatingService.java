@@ -2,18 +2,18 @@ package com.example.mateusz.batterytester.Model.Service;
 
 import com.example.mateusz.batterytester.Model.Domain.Fuzzy;
 import com.example.mateusz.batterytester.Model.Domain.Objects.FuzzyConclusionSet;
-import com.example.mateusz.batterytester.Model.Domain.PriceAverageAndTimeBadRule;
-import com.example.mateusz.batterytester.Model.Domain.PriceAverageAndTimeGoodRule;
-import com.example.mateusz.batterytester.Model.Domain.PriceAverageAndTimeVeryBadRule;
-import com.example.mateusz.batterytester.Model.Domain.PriceAverageAndTimeVeryGoodRule;
-import com.example.mateusz.batterytester.Model.Domain.PriceCheapAndTImeGoodRule;
-import com.example.mateusz.batterytester.Model.Domain.PriceCheapAndTImeVeryBadRule;
-import com.example.mateusz.batterytester.Model.Domain.PriceCheapAndTImeVeryGoodRule;
-import com.example.mateusz.batterytester.Model.Domain.PriceCheapAndTimeBadRule;
-import com.example.mateusz.batterytester.Model.Domain.PriceExpensiveAndTImeBad;
-import com.example.mateusz.batterytester.Model.Domain.PriceExpensiveAndTImeGood;
-import com.example.mateusz.batterytester.Model.Domain.PriceExpensiveAndTImeVeryBad;
-import com.example.mateusz.batterytester.Model.Domain.PriceExpensiveAndTImeVeryGood;
+import com.example.mateusz.batterytester.Model.Domain.Rules.PriceAverageAndTimeBadRule;
+import com.example.mateusz.batterytester.Model.Domain.Rules.PriceAverageAndTimeGoodRule;
+import com.example.mateusz.batterytester.Model.Domain.Rules.PriceAverageAndTimeVeryBadRule;
+import com.example.mateusz.batterytester.Model.Domain.Rules.PriceAverageAndTimeVeryGoodRule;
+import com.example.mateusz.batterytester.Model.Domain.Rules.PriceCheapAndTImeGoodRule;
+import com.example.mateusz.batterytester.Model.Domain.Rules.PriceCheapAndTImeVeryBadRule;
+import com.example.mateusz.batterytester.Model.Domain.Rules.PriceCheapAndTImeVeryGoodRule;
+import com.example.mateusz.batterytester.Model.Domain.Rules.PriceCheapAndTimeBadRule;
+import com.example.mateusz.batterytester.Model.Domain.Rules.PriceExpensiveAndTImeBadRule;
+import com.example.mateusz.batterytester.Model.Domain.Rules.PriceExpensiveAndTImeGoodRule;
+import com.example.mateusz.batterytester.Model.Domain.Rules.PriceExpensiveAndTImeVeryBadRule;
+import com.example.mateusz.batterytester.Model.Domain.Rules.PriceExpensiveAndTImeVeryGoodRule;
 import com.example.mateusz.batterytester.Model.Interface.IRule;
 
 import java.util.ArrayList;
@@ -57,10 +57,10 @@ public class RatingService {
         rules.add(new PriceCheapAndTImeGoodRule());
         rules.add(new PriceCheapAndTImeVeryBadRule());
         rules.add(new PriceCheapAndTImeVeryGoodRule());
-        rules.add(new PriceExpensiveAndTImeBad());
-        rules.add(new PriceExpensiveAndTImeGood());
-        rules.add(new PriceExpensiveAndTImeVeryBad());
-        rules.add(new PriceExpensiveAndTImeVeryGood());
+        rules.add(new PriceExpensiveAndTImeBadRule());
+        rules.add(new PriceExpensiveAndTImeGoodRule());
+        rules.add(new PriceExpensiveAndTImeVeryBadRule());
+        rules.add(new PriceExpensiveAndTImeVeryGoodRule());
         return rules;
     }
 }

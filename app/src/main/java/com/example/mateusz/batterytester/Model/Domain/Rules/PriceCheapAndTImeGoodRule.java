@@ -1,12 +1,12 @@
-package com.example.mateusz.batterytester.Model.Domain;
+package com.example.mateusz.batterytester.Model.Domain.Rules;
 
 import com.example.mateusz.batterytester.Model.Domain.Objects.FuzzyConclusionSet;
 import com.example.mateusz.batterytester.Model.Interface.IRule;
 
 
-public class PriceCheapAndTImeVeryBadRule implements IRule {
+public class PriceCheapAndTImeGoodRule implements IRule {
     @Override
     public void Run(FuzzyConclusionSet conclusionSet) {
-        conclusionSet.set_badRatingValue(Math.min(conclusionSet.PriceCheap,conclusionSet.TimeVeryBad));
+        conclusionSet.set_goodRatingValue(Math.min(conclusionSet.PriceCheap,conclusionSet.TimeGood));
     }
 }
