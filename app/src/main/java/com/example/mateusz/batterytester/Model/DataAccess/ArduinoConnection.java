@@ -57,14 +57,11 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
             e.printStackTrace();
         }
 
-        //msg_length = messageStr.length();
-        //message = messageStr.getBytes();
         _datagramPacket = new DatagramPacket(buffer, buffer.length, _inetAddress, _serverPort);
         try {
             _datagramSocked.send(_datagramPacket);
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            //e.printStackTrace();
         }
 
 
@@ -155,9 +152,6 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
     protected void onProgressUpdate(byte[]... values) {
     }
 
-    public Boolean get_receive() {
-        return _receive;
-    }
 
     public void set_receive(Boolean _receive) {
         this._receive = _receive;
