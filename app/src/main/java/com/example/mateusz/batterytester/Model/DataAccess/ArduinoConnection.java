@@ -68,7 +68,7 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
         }
 
 
-        if (_recive == true) {
+        if (_receive == true) {
             Log.v("dd", "try to receive");
             try {
                 _datagramSocked.receive(_datagramPacket);
@@ -101,7 +101,6 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
 
 
             if (_receive == true) {
-                _receive = false;
 
                 TextView time = _activity.findViewById(R.id.textViewTimeResult);
                 TextView temperature = _activity.findViewById(R.id.textViewTempResult);
