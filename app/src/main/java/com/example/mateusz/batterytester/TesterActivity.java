@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.mateusz.batterytester.Model.Domain.Fuzzy;
+//import com.example.mateusz.app.Model.Domain.Objects.FuzzyConclusionSet;
 import com.example.mateusz.batterytester.Model.Service.RatingService;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -51,6 +51,7 @@ public class TesterActivity extends AppCompatActivity {
     boolean receive = false;
     MyTimerTask myTimerTask;
     private GoogleApiClient client;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,9 +99,22 @@ public class TesterActivity extends AppCompatActivity {
     }
 
     public void buttonStop(View view) {
+
+
+        java.text.DecimalFormat df=new java.text.DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        df.setMinimumFractionDigits(2);
+
+        //cena2 = Double.parseDouble(cena.getText().toString());
+        //czas2 = Double.parseDouble(czas.getText().toString());
+
+        RatingService ratingService = new RatingService();
+        //FuzzyConclusionSet conclusionSet = new FuzzyConclusionSet();
+
+       // double rate = ratingService.RateBattery(cena2,czas2);
+        double rate = ratingService.RateBattery(1.2,20);
         RatingBar rBar = (RatingBar) findViewById(R.id.ratingBar);
-        int a = 3;
-        rBar.setRating(a);
+        rBar.setRating((float)rate);
 
     }
 
@@ -219,6 +233,7 @@ public class TesterActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean result) {
             Boolean haveToStop = false;
             String part4 = "";
+            String stop = "";
             if (result) {
                 Log.v("dd", "onPostExecute: Completed with an Error.");
             } else {
@@ -235,12 +250,12 @@ public class TesterActivity extends AppCompatActivity {
                     TextView capacity = (TextView) findViewById(R.id.textViewCapacityResult);
 
 
-
+                    /*
                     if(odebrane.contains("STOP")){
 
                          haveToStop = true;
                     }
-                    
+                    */
                     String[] parts_odebrane = odebrane.split("-");
 
                     String part1 = parts_odebrane[0];
@@ -248,6 +263,7 @@ public class TesterActivity extends AppCompatActivity {
                     String part3 = parts_odebrane[2];
                     part4 = parts_odebrane[3];
                     String part5 = parts_odebrane[4];
+                    stop = parts_odebrane[5];
 
                     temperature.setText(part1);
                     voltage.setText(part2);
@@ -255,16 +271,41 @@ public class TesterActivity extends AppCompatActivity {
                     time.setText(part4);
                     capacity.setText(part5);
 
+                    Log.v("haveToStop", "Stop: " + stop);
+
+                    int end=0;
+                    try {
+
+                        //stop.replaceAll("[^\\d.]","").trim();
+                        end = Integer.parseInt(stop.trim());
+                        Log.v("haveToStop", "End " + end);
+                    }
+                    catch (NumberFormatException e){
+                        stop="";
+                    }
+                    if(end==1){
+                        haveToStop=true;
+                        Log.v("haveToStop", "Wartość: " + end);
+                    }
+
+                    /*if(stop.equals("1")){
+                        haveToStop = true;
 
 
+                    }*/
 
                 }
 
 
             }
+
+
             if(haveToStop){
                 RatingService ratingService = new RatingService();
-                double rate = ratingService.RateBatery(1.2,Double.parseDouble(part4));
+                double rate = ratingService.RateBattery(1.2,20);
+                RatingBar rBar = (RatingBar) findViewById(R.id.ratingBar);
+                rBar.setRating((float)rate);
+
                 this.cancel(haveToStop);
             }
 
