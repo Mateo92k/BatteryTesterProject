@@ -91,6 +91,7 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
     protected void onPostExecute(Boolean result) {
         Boolean haveToStop = false;
         ArduinoResponse response = null;
+        ArduinoTranslationService translationService = new ArduinoTranslationService();
         if (result) {
             Log.v("Results", "onPostExecute: Completed with an Error.");
         } else {
@@ -105,7 +106,7 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
                 TextView current = _activity.findViewById(R.id.textViewCurrentResult);
                 TextView capacity = _activity.findViewById(R.id.textViewCapacityResult);
 
-                ArduinoTranslationService translationService = new ArduinoTranslationService();
+
                 translationService.set_rawResponse(_rawResponse);
 
                 try {
@@ -136,7 +137,7 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
 
         if(haveToStop){
             RatingService ratingService = new RatingService();
-            double rate = ratingService.RateBattery(1.2,20);
+            double rate = ratingService.RateBattery(1.2,translationService.GetSecondsFromTime());
             // TODO Dodać cenę z jakiegoś wpisywaczka.
 
             RatingBar rBar = _activity.findViewById(R.id.ratingBar);
