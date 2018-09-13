@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.mateusz.batterytester.Model.Domain.Objects.ArduinoResponse;
 import com.example.mateusz.batterytester.Model.Service.ArduinoTranslationService;
 import com.example.mateusz.batterytester.Model.Service.RatingService;
+import com.example.mateusz.batterytester.Model.Service.ServiceTimer;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -51,14 +52,14 @@ public class TesterActivity extends AppCompatActivity {
 
     Timer timer;
     boolean receive = false;
-    MyTimerTask myTimerTask;
+    ServiceTimer myTimerTask;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         timer = new Timer();
-        myTimerTask = new MyTimerTask();
+        myTimerTask = new ServiceTimer(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tester);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -138,172 +139,4 @@ public class TesterActivity extends AppCompatActivity {
         super.onStop();
     }
 
-
-    class polaczenie extends AsyncTask<String, byte[], Boolean> {
-
-        int server_port = 8888;
-        DatagramSocket s;
-        InetAddress local;
-       // int msg_length;
-      //  byte[] message;
-        DatagramPacket p;
-        private String _rawResponse;
-
-
-
-        protected void onPreExecute() {
-            Log.v("dd", "exec");
-
-        }
-
-
-        public Boolean doInBackground(String... buf1) {
-
-            boolean result = false;
-            byte[] buf = buf1[0].getBytes();
-            Log.v("dd", "buf1[0] " + buf1[0]);
-
-            try {
-                s = new DatagramSocket();
-            } catch (SocketException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            try {
-                local = InetAddress.getByName("192.168.1.177");
-            } catch (UnknownHostException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            //msg_length = messageStr.length();
-            //message = messageStr.getBytes();
-            p = new DatagramPacket(buf, buf.length, local, server_port);
-            try {
-                s.send(p);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                //e.printStackTrace();
-            }
-
-
-            if (receive == true) {
-                Log.v("dd", "try to receive");
-                try {
-                    s.receive(p);
-                    _rawResponse = new String(p.getData());
-
-                    Log.v("dd", "S: Received: '" + _rawResponse + "'");
-
-                } catch (IOException e) {
-
-                    Log.v("dd", "blad odbioru danych");
-
-                }
-            }
-            //Log.v("dd", "S: Received: '" + new String(p.getData()) + "'");
-            //	MainActivity.Tview1.setText(new String(p.getData()));
-
-
-            return result;
-        }
-
-
-        @Override
-        protected void onCancelled() {
-
-        }
-
-        //Method is called after taskexecution
-        @Override
-        protected void onPostExecute(Boolean result) {
-            Boolean haveToStop = false;
-            String part4 = "";
-            String stop = "";
-            if (result) {
-                Log.v("dd", "onPostExecute: Completed with an Error.");
-            } else {
-                Log.v("dd", "onPostExecute: Completed.");
-
-
-                if (receive == true) {
-                    receive = false;
-
-                    TextView time = findViewById(R.id.textViewTimeResult);
-                    TextView temperature = findViewById(R.id.textViewTempResult);
-                    TextView voltage = findViewById(R.id.textViewVoltageResult);
-                    TextView current = findViewById(R.id.textViewCurrentResult);
-                    TextView capacity = findViewById(R.id.textViewCapacityResult);
-
-                    ArduinoTranslationService translationService = new ArduinoTranslationService();
-                    translationService.set_rawResponse(_rawResponse);
-                    ArduinoResponse response = null;
-                    try {
-                        response = translationService.ProcessResponse();
-                    }catch (Exception e){
-                        Log.v("Translation Exception", "Some Exception occurred during translation " + e.getMessage());
-                    }
-
-                    if(response == null){
-                        return;
-                    }
-
-
-                    temperature.setText(response.get_temperature());
-                    voltage.setText(response.get_voltage());
-                    current.setText(response.get_current());
-                    time.setText(response.get_time());
-                    capacity.setText(response.get_capacity());
-
-                    Log.v("haveToStop", "Stop: " + stop);
-
-                    if(response.get_stop()){
-                        haveToStop=true;
-                        Log.v("haveToStop", "Value: " + true);
-                    }
-                }
-            }
-
-
-            if(haveToStop){
-                RatingService ratingService = new RatingService();
-                double rate = ratingService.RateBattery(1.2,20);
-                RatingBar rBar = findViewById(R.id.ratingBar);
-                rBar.setRating((float)rate);
-
-                this.cancel(haveToStop);
-            }
-
-        }
-
-        //Methods is called everytime a new String is recieved from the socket connection
-        @Override
-        protected void onProgressUpdate(byte[]... values) {
-
-            //   MainActivity.TempUpdate(odebrane);
-            if (values.length > 0) {//if the recieved data is at least one byte
-
-            }
-        }
-
-    }
-    class MyTimerTask extends TimerTask {
-
-        @Override
-        public void run() {
-
-            runOnUiThread(new Runnable() {
-
-                @Override
-                public void run() {
-
-                    String buf = ("V                              ");
-                    receive = true;
-                    new polaczenie().execute(buf, null, null);
-
-                }
-            });
-        }
-    }
 }
