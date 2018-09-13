@@ -21,14 +21,13 @@ import java.net.UnknownHostException;
 public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
 
     Activity _activity;
-    int server_port = 8888;
-    DatagramSocket s;
-    InetAddress local;
-    // int msg_length;
-    //  byte[] message;
-    DatagramPacket p;
+    private final int _serverPort = 8888;
+    private final String _servierAddres = "192.168.1.177";
+    private DatagramSocket _datagramSocked;
+    private InetAddress _inetAddress;
+    private DatagramPacket _datagramPacket;
     private String _rawResponse;
-    private Boolean _recive;
+    private Boolean _receive;
 
 
     public ArduinoConnection(Activity activity){
@@ -36,26 +35,23 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
     }
 
     protected void onPreExecute() {
-        Log.v("dd", "exec");
-
     }
 
 
     public Boolean doInBackground(String... buf1) {
 
         boolean result = false;
-        byte[] buf = buf1[0].getBytes();
-        Log.v("dd", "buf1[0] " + buf1[0]);
+        byte[] buffer = buf1[0].getBytes();
 
         try {
-            s = new DatagramSocket();
+            _datagramSocked = new DatagramSocket();
         } catch (SocketException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
         try {
-            local = InetAddress.getByName("192.168.1.177");
+            _inetAddress = InetAddress.getByName(_servierAddres);
         } catch (UnknownHostException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -63,9 +59,9 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
 
         //msg_length = messageStr.length();
         //message = messageStr.getBytes();
-        p = new DatagramPacket(buf, buf.length, local, server_port);
+        _datagramPacket = new DatagramPacket(buffer, buffer.length, _inetAddress, _serverPort);
         try {
-            s.send(p);
+            _datagramSocked.send(_datagramPacket);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             //e.printStackTrace();
@@ -75,19 +71,17 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
         if (_recive == true) {
             Log.v("dd", "try to receive");
             try {
-                s.receive(p);
-                _rawResponse = new String(p.getData());
+                _datagramSocked.receive(_datagramPacket);
+                _rawResponse = new String(_datagramPacket.getData());
 
-                Log.v("dd", "S: Received: '" + _rawResponse + "'");
+                Log.v("Data received ", "S: Received: '" + _rawResponse + "'");
 
             } catch (IOException e) {
 
-                Log.v("dd", "blad odbioru danych");
+                Log.v("Exception", "Error :" + e.getMessage());
 
             }
         }
-
-
         return result;
     }
 
@@ -96,20 +90,18 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
     protected void onCancelled() {
     }
 
-    //Method is called after taskexecution
     @Override
     protected void onPostExecute(Boolean result) {
         Boolean haveToStop = false;
-        String part4 = "";
-        String stop = "";
+        ArduinoResponse response = null;
         if (result) {
-            Log.v("dd", "onPostExecute: Completed with an Error.");
+            Log.v("Results", "onPostExecute: Completed with an Error.");
         } else {
-            Log.v("dd", "onPostExecute: Completed.");
+            Log.v("Results", "onPostExecute: Completed.");
 
 
-            if (_recive == true) {
-                _recive = false;
+            if (_receive == true) {
+                _receive = false;
 
                 TextView time = _activity.findViewById(R.id.textViewTimeResult);
                 TextView temperature = _activity.findViewById(R.id.textViewTempResult);
@@ -119,7 +111,7 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
 
                 ArduinoTranslationService translationService = new ArduinoTranslationService();
                 translationService.set_rawResponse(_rawResponse);
-                ArduinoResponse response = null;
+
                 try {
                     response = translationService.ProcessResponse();
                 }catch (Exception e){
@@ -134,10 +126,9 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
                 temperature.setText(response.get_temperature());
                 voltage.setText(response.get_voltage());
                 current.setText(response.get_current());
-                time.setText(response.get_time());
+                time.setText(response.get_time().toString());
                 capacity.setText(response.get_capacity());
 
-                Log.v("haveToStop", "Stop: " + stop);
 
                 if(response.get_stop()){
                     haveToStop=true;
@@ -149,7 +140,9 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
 
         if(haveToStop){
             RatingService ratingService = new RatingService();
-            double rate = ratingService.RateBattery(1.2,20);
+            double rate = ratingService.RateBattery(1.2,response.get_time());
+            // TODO Dodać cenę z jakiegoś wpisywaczka.
+
             RatingBar rBar = _activity.findViewById(R.id.ratingBar);
             rBar.setRating((float)rate);
 
@@ -161,18 +154,13 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
     //Methods is called everytime a new String is recieved from the socket connection
     @Override
     protected void onProgressUpdate(byte[]... values) {
-
-        //   MainActivity.TempUpdate(odebrane);
-        if (values.length > 0) {//if the recieved data is at least one byte
-
-        }
     }
 
-    public Boolean get_recive() {
-        return _recive;
+    public Boolean get_receive() {
+        return _receive;
     }
 
-    public void set_recive(Boolean _recive) {
-        this._recive = _recive;
+    public void set_receive(Boolean _receive) {
+        this._receive = _receive;
     }
 }

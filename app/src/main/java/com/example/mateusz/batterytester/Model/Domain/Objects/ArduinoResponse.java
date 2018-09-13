@@ -7,7 +7,7 @@ public class ArduinoResponse {
 
     private String _current;
 
-    private String _time;
+    private Double _time;
 
     private String _capacity;
 
@@ -37,11 +37,11 @@ public class ArduinoResponse {
         this._current = _current;
     }
 
-    public String get_time() {
+    public Double get_time() {
         return _time;
     }
 
-    public void set_time(String _time) {
+    public void set_time(Double _time) {
         this._time = _time;
     }
 

@@ -3,7 +3,6 @@ package com.example.mateusz.batterytester.Model.Service;
 import android.app.Activity;
 
 import com.example.mateusz.batterytester.Model.DataAccess.ArduinoConnection;
-import com.example.mateusz.batterytester.TesterActivity;
 
 import java.util.TimerTask;
 
@@ -26,7 +25,7 @@ public class ServiceTimer extends TimerTask {
 
                 String buf = ("V                              ");
                 ArduinoConnection connection = new ArduinoConnection(_activity);
-                connection.set_recive(true);
+                connection.set_receive(true);
                 connection.execute(buf);
             }
         });
