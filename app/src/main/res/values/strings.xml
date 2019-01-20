@@ -8,9 +8,10 @@
     <string name="current_view">PRĄD</string>
     <string name="capacity_view">POJEMNOŚĆ</string>
     <string name="rating_view">OCENA OGNIWA</string>
-    
+
     <string name="start_button">START</string>
     <string name="stop_button">STOP</string>
+    <string name="title_activity_about">O programie</string>
 
 
 </resources>

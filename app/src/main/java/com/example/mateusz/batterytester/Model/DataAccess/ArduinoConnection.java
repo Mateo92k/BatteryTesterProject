@@ -137,7 +137,7 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
 
         if(haveToStop){
             RatingService ratingService = new RatingService();
-            double rate = ratingService.RateBattery(1.2,translationService.GetSecondsFromTime());
+            double rate = ratingService.RateBattery(3.2,translationService.GetSecondsFromTime());
             // TODO Dodać cenę z jakiegoś wpisywaczka.
 
             RatingBar rBar = _activity.findViewById(R.id.ratingBar);
