@@ -10,6 +10,7 @@ import com.example.mateusz.batterytester.Model.Domain.Objects.ArduinoResponse;
 import com.example.mateusz.batterytester.Model.Service.ArduinoTranslationService;
 import com.example.mateusz.batterytester.Model.Service.RatingService;
 import com.example.mateusz.batterytester.R;
+import com.example.mateusz.batterytester.TesterActivity;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -21,6 +22,7 @@ import java.net.UnknownHostException;
 public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
 
     Activity _activity;
+//  private double price;
     private final int _serverPort = 8888;
     private final String _servierAddres = "192.168.1.177";
     private DatagramSocket _datagramSocked;
@@ -92,6 +94,7 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
         Boolean haveToStop = false;
         ArduinoResponse response = null;
         ArduinoTranslationService translationService = new ArduinoTranslationService();
+        TesterActivity testerActivity = new TesterActivity();
         if (result) {
             Log.v("Results", "onPostExecute: Completed with an Error.");
         } else {
@@ -137,8 +140,7 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
 
         if(haveToStop){
             RatingService ratingService = new RatingService();
-            double rate = ratingService.RateBattery(3.2,translationService.GetSecondsFromTime());
-            // TODO Dodać cenę z jakiegoś wpisywaczka.
+            double rate = ratingService.RateBattery(testerActivity.priceDialog,translationService.GetSecondsFromTime());
 
             RatingBar rBar = _activity.findViewById(R.id.ratingBar);
             rBar.setRating((float)rate);

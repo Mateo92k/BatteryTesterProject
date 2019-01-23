@@ -1,5 +1,7 @@
 package com.example.mateusz.batterytester;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,9 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RatingBar;
 
-import com.example.mateusz.batterytester.Model.Service.RatingService;
 import com.example.mateusz.batterytester.Model.Service.ServiceTimer;
 
 import java.util.Timer;
@@ -20,6 +20,8 @@ public class TesterActivity extends AppCompatActivity {
 
     Timer timer;
     ServiceTimer myTimerTask;
+    public double priceDialog = 0.0;
+    Context activityContext;
 
 
     @Override
@@ -31,6 +33,7 @@ public class TesterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tester);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        activityContext = this;
 
     }
 
@@ -66,8 +69,8 @@ public class TesterActivity extends AppCompatActivity {
 
     public void buttonStop(View view) {
 
-
-        java.text.DecimalFormat df=new java.text.DecimalFormat();
+        PriceDialogBox();
+/*        java.text.DecimalFormat df=new java.text.DecimalFormat();
         df.setMaximumFractionDigits(2);
         df.setMinimumFractionDigits(2);
 
@@ -76,7 +79,23 @@ public class TesterActivity extends AppCompatActivity {
         double rate = ratingService.RateBattery(1.2,20);
         RatingBar rBar = findViewById(R.id.ratingBar);
         rBar.setRating((float)rate);
+*/
+    }
 
+    private void PriceDialogBox(){
+
+        final Dialog dialogBox = new Dialog(activityContext);
+        dialogBox.setContentView(R.layout.price_dialog);
+
+        ((Button)dialogBox.findViewById(R.id.buttonOk)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                priceDialog = 2.0;
+
+                dialogBox.dismiss();
+            }
+        });
+        dialogBox.show();
     }
 
     @Override
