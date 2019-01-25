@@ -10,7 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
+import com.example.mateusz.batterytester.Model.Domain.Objects.InterClassDataHolder;
 import com.example.mateusz.batterytester.Model.Service.ServiceTimer;
 
 import java.util.Timer;
@@ -20,7 +22,8 @@ public class TesterActivity extends AppCompatActivity {
 
     Timer timer;
     ServiceTimer myTimerTask;
-    public double priceDialog = 0.0;
+    EditText EditTextPriceDialog;
+    double PriceDialog;
     Context activityContext;
 
 
@@ -34,6 +37,7 @@ public class TesterActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         activityContext = this;
+
 
     }
 
@@ -82,7 +86,7 @@ public class TesterActivity extends AppCompatActivity {
 */
     }
 
-    private void PriceDialogBox(){
+  /*  private void PriceDialogBox(){
 
         final Dialog dialogBox = new Dialog(activityContext);
         dialogBox.setContentView(R.layout.price_dialog);
@@ -97,6 +101,30 @@ public class TesterActivity extends AppCompatActivity {
         });
         dialogBox.show();
     }
+*/
+  private void PriceDialogBox(){
+
+
+      final Dialog dialogBox = new Dialog(activityContext);
+
+      dialogBox.setContentView(R.layout.price_dialog);
+
+      ((Button)dialogBox.findViewById(R.id.buttonOk)).setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+
+              EditTextPriceDialog = (EditText) findViewById(R.id.editTextPrice);
+              PriceDialog = Double.parseDouble(EditTextPriceDialog.getText().toString());
+
+              InterClassDataHolder interClassDataHolder = InterClassDataHolder.getInstance();
+              interClassDataHolder.setPrice(PriceDialog);
+
+              dialogBox.dismiss();
+          }
+      });
+      dialogBox.show();
+  }
+
 
     @Override
     public void onStart() {
