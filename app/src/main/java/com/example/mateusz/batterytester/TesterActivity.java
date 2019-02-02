@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 
 import com.example.mateusz.batterytester.Model.Domain.Objects.InterClassDataHolder;
 import com.example.mateusz.batterytester.Model.Service.ServiceTimer;
@@ -30,14 +31,22 @@ public class TesterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        timer = new Timer();
-        myTimerTask = new ServiceTimer(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tester);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        activityContext = this;
 
+
+
+
+    }
+
+    protected void inicialize(){
+        timer = new Timer();
+        myTimerTask = new ServiceTimer(this);
+
+        activityContext = this;
 
     }
 
@@ -66,6 +75,8 @@ public class TesterActivity extends AppCompatActivity {
     }
 
     public void buttonStart(View view) {
+        inicialize();
+        priceDialogBox();
         Button timerStartButton = findViewById(R.id.buttonStart);
         timerStartButton.setEnabled(false);
         timer.schedule(myTimerTask, 1000, 1000);
@@ -73,7 +84,12 @@ public class TesterActivity extends AppCompatActivity {
 
     public void buttonStop(View view) {
 
-        PriceDialogBox();
+        timer.cancel();
+        Button timerStartButton = findViewById(R.id.buttonStart);
+        timerStartButton.setEnabled(true);
+
+        RatingBar rBar = findViewById(R.id.ratingBar);
+        rBar.setRating((float)0.0);
 /*        java.text.DecimalFormat df=new java.text.DecimalFormat();
         df.setMaximumFractionDigits(2);
         df.setMinimumFractionDigits(2);
@@ -86,7 +102,7 @@ public class TesterActivity extends AppCompatActivity {
 */
     }
 
-  /*  private void PriceDialogBox(){
+  /*  private void priceDialogBox(){
 
         final Dialog dialogBox = new Dialog(activityContext);
         dialogBox.setContentView(R.layout.price_dialog);
@@ -102,7 +118,7 @@ public class TesterActivity extends AppCompatActivity {
         dialogBox.show();
     }
 */
-  private void PriceDialogBox(){
+  private void priceDialogBox(){
 
 
       final Dialog dialogBox = new Dialog(activityContext);
@@ -110,11 +126,13 @@ public class TesterActivity extends AppCompatActivity {
       dialogBox.setContentView(R.layout.price_dialog);
 
       ((Button)dialogBox.findViewById(R.id.buttonOk)).setOnClickListener(new View.OnClickListener() {
+
           @Override
           public void onClick(View view) {
 
-              EditTextPriceDialog = (EditText) findViewById(R.id.editTextPrice);
+              EditTextPriceDialog = (EditText) dialogBox.findViewById(R.id.editTextPrice);
               PriceDialog = Double.parseDouble(EditTextPriceDialog.getText().toString());
+
 
               InterClassDataHolder interClassDataHolder = InterClassDataHolder.getInstance();
               interClassDataHolder.setPrice(PriceDialog);

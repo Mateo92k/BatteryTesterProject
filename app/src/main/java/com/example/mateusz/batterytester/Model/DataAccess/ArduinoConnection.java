@@ -1,6 +1,8 @@
 package com.example.mateusz.batterytester.Model.DataAccess;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.RatingBar;
@@ -123,18 +125,34 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
                     return;
                 }
 
-
-                temperature.setText(response.get_temperature());
-                voltage.setText(response.get_voltage());
-                current.setText(response.get_current());
-                time.setText(response.get_time());
-                capacity.setText(response.get_capacity());
-
-
-                if(response.get_stop()){
+                if (Double.parseDouble(response.get_temperature())>29.0){
                     haveToStop=true;
-                    Log.v("haveToStop", "Value: " + true);
+                    final AlertDialog.Builder dialogBulider = new AlertDialog.Builder(_activity);
+                    dialogBulider.setMessage("Zbyt wysoka temperatura");
+                    dialogBulider.setCancelable(false);
+                    dialogBulider.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            dialogInterface.cancel();
+                        }
+                    });
+                    dialogBulider.show();
                 }
+                else {
+                    temperature.setText(response.get_temperature());
+                    voltage.setText(response.get_voltage());
+                    current.setText(response.get_current());
+                    time.setText(response.get_time());
+                    capacity.setText(response.get_capacity());
+
+                    if(response.get_stop()){
+                        haveToStop=true;
+                        Log.v("haveToStop", "Value: " + true);
+                    }
+                }
+
+
             }
         }
 
