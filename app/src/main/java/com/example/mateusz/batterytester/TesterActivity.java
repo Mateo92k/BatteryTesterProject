@@ -27,7 +27,6 @@ public class TesterActivity extends AppCompatActivity {
     double PriceDialog;
     Context activityContext;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -37,38 +36,36 @@ public class TesterActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
+        Button timerStopButton = findViewById(R.id.buttonStop);
+        timerStopButton.setEnabled(false);
 
     }
 
     protected void inicialize(){
         timer = new Timer();
         myTimerTask = new ServiceTimer(this);
-
         activityContext = this;
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_tester, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_about) {
             Intent about_intent = new Intent(this,AboutActivity.class);
             startActivity(about_intent);
             return true;
+        }
+
+        if (id == R.id.action_exit){
+            System.exit(0);
         }
 
         return super.onOptionsItemSelected(item);
@@ -78,7 +75,9 @@ public class TesterActivity extends AppCompatActivity {
         inicialize();
         priceDialogBox();
         Button timerStartButton = findViewById(R.id.buttonStart);
+        Button timerStopButton = findViewById(R.id.buttonStop);
         timerStartButton.setEnabled(false);
+        timerStopButton.setEnabled(true);
         timer.schedule(myTimerTask, 1000, 1000);
     }
 
@@ -87,37 +86,10 @@ public class TesterActivity extends AppCompatActivity {
         timer.cancel();
         Button timerStartButton = findViewById(R.id.buttonStart);
         timerStartButton.setEnabled(true);
-
         RatingBar rBar = findViewById(R.id.ratingBar);
         rBar.setRating((float)0.0);
-/*        java.text.DecimalFormat df=new java.text.DecimalFormat();
-        df.setMaximumFractionDigits(2);
-        df.setMinimumFractionDigits(2);
-
-        RatingService ratingService = new RatingService();
-
-        double rate = ratingService.RateBattery(1.2,20);
-        RatingBar rBar = findViewById(R.id.ratingBar);
-        rBar.setRating((float)rate);
-*/
     }
 
-  /*  private void priceDialogBox(){
-
-        final Dialog dialogBox = new Dialog(activityContext);
-        dialogBox.setContentView(R.layout.price_dialog);
-
-        ((Button)dialogBox.findViewById(R.id.buttonOk)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                priceDialog = 2.0;
-
-                dialogBox.dismiss();
-            }
-        });
-        dialogBox.show();
-    }
-*/
   private void priceDialogBox(){
 
 
@@ -142,7 +114,6 @@ public class TesterActivity extends AppCompatActivity {
       });
       dialogBox.show();
   }
-
 
     @Override
     public void onStart() {

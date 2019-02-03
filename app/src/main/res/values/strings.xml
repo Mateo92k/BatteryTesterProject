@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Battery Tester</string>
     <string name="action_about">O programie</string>
+    <string name="action_exit">Zamknij</string>
 
     <string name="time_view">CZAS</string>
     <string name="temp_view">TEMPERATURA</string>
