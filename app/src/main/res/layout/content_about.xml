@@ -9,11 +9,80 @@
     tools:showIn="@layout/activity_about">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewAboutProgram"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="Aplikacja BatteryTester została zaprojektowana do oceny wydajności mierzonego ogniwa. Pozwala w przyjazny sposób przedstawić użytkownikowi stan badanego ogniwa. Wynik jest wyświetlany w postaci pięciu wypełnianych pól w kształcie gwiazdek. Im wyższa ocena tym większą ilość gwiazdek przyznaje aplikacja. Aby rozpocząć proces oceny wykonywanego pomiaru należy wcisnąć przycisk START. Po osiągnięciu przez ogniwo napięcia minimalnego, które wynosi 0,9V, aplikacja automatycznie rozpoczyna proces wnioskowania oraz przedstawia wynik w postaci przyznanych gwiazdek."
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/Separator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="220dp"
+        android:background="#90909090"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewProj_part1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="236dp"
+        android:text="Aplikacja powstała w ramach projektu"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewProj_part2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="255dp"
+        android:gravity="center"
+        android:text="Pracy Dyplomowej Inżynierskiej."
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="290dp"
+        android:gravity="center"
+        android:text="Autor: Mateusz Kurzejewski"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="131dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="332dp"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pk_logo" />
+
+    <TextView
+        android:id="@+id/textViewDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="Koszalin 2019"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 </android.support.constraint.ConstraintLayout>
