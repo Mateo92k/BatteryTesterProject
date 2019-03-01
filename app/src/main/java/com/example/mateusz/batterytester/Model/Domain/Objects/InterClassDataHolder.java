@@ -8,7 +8,7 @@ public class InterClassDataHolder {
     private double _price;
 
     private InterClassDataHolder(){
-        // Empty initialization of Singleton Pattern
+
     }
 
     public static InterClassDataHolder getInstance(){

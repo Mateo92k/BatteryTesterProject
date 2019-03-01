@@ -24,7 +24,6 @@ import java.net.UnknownHostException;
 public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
 
     Activity _activity;
-//  private double price;
     private final int _serverPort = 8888;
     private final String _servierAddres = "192.168.1.177";
     private DatagramSocket _datagramSocked;
@@ -32,7 +31,6 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
     private DatagramPacket _datagramPacket;
     private String _rawResponse;
     private Boolean _receive;
-
 
     public ArduinoConnection(Activity activity){
         _activity = activity;
@@ -50,14 +48,12 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
         try {
             _datagramSocked = new DatagramSocket();
         } catch (SocketException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
         try {
             _inetAddress = InetAddress.getByName(_servierAddres);
         } catch (UnknownHostException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -65,7 +61,7 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
         try {
             _datagramSocked.send(_datagramPacket);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+
         }
 
 
@@ -86,7 +82,6 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
         return result;
     }
 
-
     @Override
     protected void onCancelled() {
     }
@@ -96,12 +91,10 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
         Boolean haveToStop = false;
         ArduinoResponse response = null;
         ArduinoTranslationService translationService = new ArduinoTranslationService();
- //       TesterActivity testerActivity = new TesterActivity();
         if (result) {
             Log.v("Results", "onPostExecute: Completed with an Error.");
         } else {
             Log.v("Results", "onPostExecute: Completed.");
-
 
             if (_receive == true) {
 
@@ -110,7 +103,6 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
                 TextView voltage = _activity.findViewById(R.id.textViewVoltageResult);
                 TextView current = _activity.findViewById(R.id.textViewCurrentResult);
                 TextView capacity = _activity.findViewById(R.id.textViewCapacityResult);
-
 
 
                 translationService.set_rawResponse(_rawResponse);
@@ -132,9 +124,7 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
                     dialogBulider.setCancelable(false);
                     dialogBulider.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                            dialogInterface.cancel();
+                        public void onClick(DialogInterface dialogInterface, int i) {dialogInterface.cancel();
                         }
                     });
                     dialogBulider.show();
@@ -152,7 +142,6 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
                     }
                 }
 
-
             }
         }
 
@@ -169,11 +158,9 @@ public class ArduinoConnection extends AsyncTask<String, byte[], Boolean> {
 
     }
 
-    //Methods is called everytime a new String is recieved from the socket connection
     @Override
     protected void onProgressUpdate(byte[]... values) {
     }
-
 
     public void set_receive(Boolean _receive) {
         this._receive = _receive;
